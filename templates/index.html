@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Health Insights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Background video -->
+    <video autoplay muted loop class="bg-video">
+        <source src="{{ url_for('static', filename='video2.mp4') }}" type="video/mp4">
+    </video>
+
+    <!-- Header -->
+    <div class="head">
+        <img src="{{ url_for('static', filename='icon.jpg') }}" alt="Icon">
+        <h1>Diabetes Diagnosis</h1>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Dashboard</li>
+            <li>Login</li>
+        </ul>
+    </div>
+
+    <!-- Main Form -->
+    <div class="search">
+        <h2>Diagnosis</h2>
+        <form method="POST" action="/predict">
+            <h3>Pregnancies:<input type="number" name="Pregnancies" placeholder="Pregnancies" required></h3>
+            <h3>Glucose:<input type="number" name="Glucose" placeholder="Glucose" step="any" required></h3>
+            <h3>Blood Pressure:<input type="number" name="BloodPressure" placeholder="Blood Pressure" step="any" required></h3>
+            <h3>Skin Thickness:<input type="number" name="SkinThickness" placeholder="Skin Thickness" step="any" required></h3>
+            <h3>Insulin:<input type="number" name="Insulin" placeholder="Insulin" step="any" required></h3>
+            <h3>BMI:<input type="number" name="BMI" placeholder="BMI" step="any" required></h3>
+            <h3>Diabetes Pedigree Function:<input type="number" name="DiabetesPedigreeFunction" placeholder="DPF" step="any" required></h3>
+            <h3>Age:<input type="number" name="Age" placeholder="Age" required></h3>
+
+            <div class="button">
+                <button type="submit">Submit</button>
+                <button type="button" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Output Section -->
+    {% if result %}
+    <div class="output">
+        <h3>Result: <input value="{{ result }}" readonly></h3>
+    </div>
+    {% endif %}
+
+    <!-- Contact Info -->
+    <div class="contact">
+        <h2>Contact: 1234567890</h2>
+        <h2>Email: teamalpha@gmail.com</h2>
+        <div class="declaration">
+            <p>
+                <strong>Declaration:</strong> The information and results provided by this AI-powered tool are for educational and preliminary diagnostic purposes only. Please consult a healthcare professional for accurate diagnosis and treatment.
+            </p>
+        </div>
+    </div>
+
+    <!-- JS for Reset -->
+    <script>
+        function resetForm() {
+            window.location.href = "/";
+        }
+    </script>
+
+</body>
+</html>
