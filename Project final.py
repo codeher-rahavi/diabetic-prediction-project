@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sklearn as sk
 import seaborn as sns
-data=pd.read_csv(r"/content/diabetes (1).csv")
+data=pd.read_csv(r"diabetes (1).csv")
 correlation=data.corr()
 from sklearn.model_selection import train_test_split
 X=data[["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]]
