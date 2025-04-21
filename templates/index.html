@@ -52,6 +52,13 @@
     <h3>Probability: <input value="{{ probability }}%" readonly></h3>
     <h3>Severity Stage: <input value="{{ severity }}" readonly class="{{ severity_class }}"></h3>
 </div>
+<div class="severity-meter">
+    <label>Severity Meter</label>
+    <div class="meter">
+        <div class="meter-fill {{ severity_class }}" style="width: {{ probability }}%;"></div>
+    </div>
+    <p class="{{ severity_class }}">{{ severity }} ({{ probability }}%)</p>
+</div>
 {% endif %}
     <!-- Contact Info -->
     <div class="contact">
