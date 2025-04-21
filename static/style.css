@@ -152,7 +152,7 @@ button:hover {
 
 .low-risk {
     background-color: green;
-    color: black;
+    color: green;
 }
 
 .moderate-risk {
@@ -162,12 +162,12 @@ button:hover {
 
 .high-risk {
     background-color: orangered;
-    color: black;
+    color: orangered;
 }
 
 .very-high-risk {
     background-color: red;
-    color: black;
+    color: red;
 }
 
 /* Speedometer Gauge Style */
@@ -180,3 +180,4 @@ canvas#severityGauge {
     margin: 0 auto;
     display: block;
 }
+
