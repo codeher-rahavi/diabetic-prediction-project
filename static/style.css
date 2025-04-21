@@ -127,7 +127,13 @@ button:hover {
     font-style: italic;
     border-radius: 8px;
 }
-
+.output h3 input {
+    background-color: #f0f8ff;
+    color: #034f6f;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #034f6f;
+}
 /* Severity Meter Styles */
 .severity-meter {
     margin: 20px auto;
