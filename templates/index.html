@@ -3,27 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diabetes Diagnosis</title>
+    <title>Diabetes Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .meter-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        canvas#gauge {
-            width: 300px;
-            height: 150px;
-        }
-
-        .severity-text {
-            margin-top: 10px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
 
@@ -44,7 +25,7 @@
         </ul>
     </div>
 
-    <!-- Input Form -->
+    <!-- Diagnosis Form -->
     <div class="search">
         <h2>Diagnosis</h2>
         <form method="POST" action="/predict">
@@ -64,22 +45,23 @@
         </form>
     </div>
 
-    <!-- Output Section -->
+    <!-- Prediction Result -->
     {% if result %}
     <div class="output">
         <h3>Result: <input value="{{ result }}" readonly></h3>
-        <h3>Probability: {{ probability }}%</h3>
-        <h3>Severity Stage: {{ severity }}</h3>
 
-        <!-- Speedometer Gauge -->
-        <div class="meter-container">
-            <canvas id="gauge" width="300" height="150"></canvas>
-            <div class="severity-text {{ severity_class }}">{{ severity }}</div>
+        <!-- Severity Meter -->
+        <div class="severity-meter">
+            <label>Severity Meter</label>
+            <div class="meter">
+                <div class="meter-fill {{ severity_class }}" style="width: {{ probability }}%;"></div>
+            </div>
+            <p class="{{ severity_class }}">{{ severity }} ({{ probability }}%)</p>
         </div>
     </div>
     {% endif %}
 
-    <!-- Contact Info -->
+    <!-- Contact Section -->
     <div class="contact">
         <h2>Email: teamalpha@gmail.com</h2>
         <div class="declaration">
@@ -89,50 +71,11 @@
         </div>
     </div>
 
+    <!-- Reset Script -->
     <script>
         function resetForm() {
             window.location.href = "/";
         }
-
-        // Draw speedometer if probability is available
-        {% if probability %}
-        const canvas = document.getElementById('gauge');
-        const ctx = canvas.getContext('2d');
-        const percent = {{ probability }}; // from Flask
-        const maxAngle = Math.PI; // 180 degrees
-
-        function drawGauge(value) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Background arc
-            ctx.beginPath();
-            ctx.arc(150, 150, 100, Math.PI, 0);
-            ctx.strokeStyle = "#ccc";
-            ctx.lineWidth = 20;
-            ctx.stroke();
-
-            // Fill arc based on probability
-            ctx.beginPath();
-            ctx.arc(150, 150, 100, Math.PI, Math.PI + (value / 100 * Math.PI), false);
-            ctx.strokeStyle = value < 30 ? "green" : value < 60 ? "orange" : value < 85 ? "red" : "darkred";
-            ctx.lineWidth = 20;
-            ctx.stroke();
-
-            // Center circle
-            ctx.beginPath();
-            ctx.arc(150, 150, 10, 0, 2 * Math.PI);
-            ctx.fillStyle = "#333";
-            ctx.fill();
-
-            // Text
-            ctx.font = "16px Arial";
-            ctx.fillStyle = "#000";
-            ctx.textAlign = "center";
-            ctx.fillText(`${value}%`, 150, 140);
-        }
-
-        drawGauge(percent);
-        {% endif %}
     </script>
 
 </body>
