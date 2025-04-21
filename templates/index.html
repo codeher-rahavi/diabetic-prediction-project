@@ -52,12 +52,9 @@
     <h3>Probability: <input value="{{ probability }}%" readonly></h3>
     <h3>Severity Stage: <input value="{{ severity }}" readonly class="{{ severity_class }}"></h3>
 </div>
-<div class="severity-meter">
-    <label>Severity Meter</label>
-    <div class="meter">
-        <div class="meter-fill {{ severity_class }}" style="width: {{ probability }}%;"></div>
-    </div>
-    <p class="{{ severity_class }}">{{ severity }} ({{ probability }}%)</p>
+<div class="gauge-section">
+    <h3>Severity Gauge</h3>
+    <canvas id="severityGauge" width="250" height="250"></canvas>
 </div>
 {% endif %}
     <!-- Contact Info -->
@@ -76,6 +73,55 @@
             window.location.href = "/";
         }
     </script>
+<script>
+    const probability = {{ probability|default(0) }};  // From Flask
+    const severityLabel = "{{ severity }}";
 
+    const ctx = document.getElementById('severityGauge').getContext('2d');
+
+    const gaugeChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [probability, 100 - probability],
+                backgroundColor: [
+                    probability < 30 ? 'green' :
+                    probability < 60 ? 'orange' :
+                    probability < 85 ? 'orangered' : 'red',
+                    '#e0e0e0'
+                ],
+                borderWidth: 0,
+                cutout: '80%',
+                rotation: -90,
+                circumference: 180
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                doughnutlabel: {
+                    labels: [
+                        {
+                            text: severityLabel,
+                            font: {
+                                size: '18'
+                            },
+                            color: '#333'
+                        },
+                        {
+                            text: probability + '%',
+                            font: {
+                                size: '20',
+                                weight: 'bold'
+                            }
+                        }
+                    ]
+                },
+                legend: { display: false },
+                tooltip: { enabled: false }
+            }
+        }
+    });
+</script>
 </body>
 </html>
