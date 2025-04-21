@@ -3,12 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered Health Insights</title>
+    <title>Diabetes Diagnosis</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .meter-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        canvas#gauge {
+            width: 300px;
+            height: 150px;
+        }
+
+        .severity-text {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Background video -->
+    <!-- Background Video -->
     <video autoplay muted loop class="bg-video">
         <source src="{{ url_for('static', filename='video2.mp4') }}" type="video/mp4">
     </video>
@@ -25,18 +44,18 @@
         </ul>
     </div>
 
-    <!-- Main Form -->
+    <!-- Input Form -->
     <div class="search">
         <h2>Diagnosis</h2>
         <form method="POST" action="/predict">
-            <h3>Pregnancies:<input type="number" name="Pregnancies" placeholder="Pregnancies" required></h3>
-            <h3>Glucose:<input type="number" name="Glucose" placeholder="Glucose" step="any" required></h3>
-            <h3>Blood Pressure:<input type="number" name="BloodPressure" placeholder="Blood Pressure" step="any" required></h3>
-            <h3>Skin Thickness:<input type="number" name="SkinThickness" placeholder="Skin Thickness" step="any" required></h3>
-            <h3>Insulin:<input type="number" name="Insulin" placeholder="Insulin" step="any" required></h3>
-            <h3>BMI:<input type="number" name="BMI" placeholder="BMI" step="any" required></h3>
-            <h3>Diabetes Pedigree Function:<input type="number" name="DiabetesPedigreeFunction" placeholder="DPF" step="any" required></h3>
-            <h3>Age:<input type="number" name="Age" placeholder="Age" required></h3>
+            <h3>Pregnancies:<input type="number" name="Pregnancies" required></h3>
+            <h3>Glucose:<input type="number" name="Glucose" step="any" required></h3>
+            <h3>Blood Pressure:<input type="number" name="BloodPressure" step="any" required></h3>
+            <h3>Skin Thickness:<input type="number" name="SkinThickness" step="any" required></h3>
+            <h3>Insulin:<input type="number" name="Insulin" step="any" required></h3>
+            <h3>BMI:<input type="number" name="BMI" step="any" required></h3>
+            <h3>Diabetes Pedigree Function:<input type="number" name="DiabetesPedigreeFunction" step="any" required></h3>
+            <h3>Age:<input type="number" name="Age" required></h3>
 
             <div class="button">
                 <button type="submit">Submit</button>
@@ -47,16 +66,19 @@
 
     <!-- Output Section -->
     {% if result %}
-<div class="output">
-    <h3>Result: <input value="{{ result }}" readonly></h3>
-    <h3>Probability: <input value="{{ probability }}%" readonly></h3>
-    <h3>Severity Stage: <input value="{{ severity }}" readonly class="{{ severity_class }}"></h3>
-</div>
-<div class="gauge-section">
-    <h3>Severity Gauge</h3>
-    <canvas id="severityGauge" width="250" height="250"></canvas>
-</div>
-{% endif %}
+    <div class="output">
+        <h3>Result: <input value="{{ result }}" readonly></h3>
+        <h3>Probability: {{ probability }}%</h3>
+        <h3>Severity Stage: {{ severity }}</h3>
+
+        <!-- Speedometer Gauge -->
+        <div class="meter-container">
+            <canvas id="gauge" width="300" height="150"></canvas>
+            <div class="severity-text {{ severity_class }}">{{ severity }}</div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Contact Info -->
     <div class="contact">
         <h2>Email: teamalpha@gmail.com</h2>
@@ -67,61 +89,51 @@
         </div>
     </div>
 
-    <!-- JS for Reset -->
     <script>
         function resetForm() {
             window.location.href = "/";
         }
-    </script>
-<script>
-    const probability = {{ probability|default(0) }};  // From Flask
-    const severityLabel = "{{ severity }}";
 
-    const ctx = document.getElementById('severityGauge').getContext('2d');
+        // Draw speedometer if probability is available
+        {% if probability %}
+        const canvas = document.getElementById('gauge');
+        const ctx = canvas.getContext('2d');
+        const percent = {{ probability }}; // from Flask
+        const maxAngle = Math.PI; // 180 degrees
 
-    const gaugeChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [probability, 100 - probability],
-                backgroundColor: [
-                    probability < 30 ? 'green' :
-                    probability < 60 ? 'orange' :
-                    probability < 85 ? 'orangered' : 'red',
-                    '#e0e0e0'
-                ],
-                borderWidth: 0,
-                cutout: '80%',
-                rotation: -90,
-                circumference: 180
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                doughnutlabel: {
-                    labels: [
-                        {
-                            text: severityLabel,
-                            font: {
-                                size: '18'
-                            },
-                            color: '#333'
-                        },
-                        {
-                            text: probability + '%',
-                            font: {
-                                size: '20',
-                                weight: 'bold'
-                            }
-                        }
-                    ]
-                },
-                legend: { display: false },
-                tooltip: { enabled: false }
-            }
+        function drawGauge(value) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background arc
+            ctx.beginPath();
+            ctx.arc(150, 150, 100, Math.PI, 0);
+            ctx.strokeStyle = "#ccc";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+
+            // Fill arc based on probability
+            ctx.beginPath();
+            ctx.arc(150, 150, 100, Math.PI, Math.PI + (value / 100 * Math.PI), false);
+            ctx.strokeStyle = value < 30 ? "green" : value < 60 ? "orange" : value < 85 ? "red" : "darkred";
+            ctx.lineWidth = 20;
+            ctx.stroke();
+
+            // Center circle
+            ctx.beginPath();
+            ctx.arc(150, 150, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = "#333";
+            ctx.fill();
+
+            // Text
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#000";
+            ctx.textAlign = "center";
+            ctx.fillText(`${value}%`, 150, 140);
         }
-    });
-</script>
+
+        drawGauge(percent);
+        {% endif %}
+    </script>
+
 </body>
 </html>
