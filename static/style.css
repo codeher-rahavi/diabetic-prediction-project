@@ -152,4 +152,44 @@ button:hover {
     background-color: #c82333; /* Dark Red */
     color: white;
 }
+.severity-meter {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.meter {
+    background-color: #eee;
+    border-radius: 25px;
+    overflow: hidden;
+    height: 25px;
+    box-shadow: inset 0 0 5px #999;
+}
+
+.meter-fill {
+    height: 100%;
+    width: 0;
+    transition: width 1s ease-in-out;
+}
+
+.low-risk {
+    background-color: green;
+    color: green;
+}
+
+.moderate-risk {
+    background-color: orange;
+    color: orange;
+}
+
+.high-risk {
+    background-color: orangered;
+    color: orangered;
+}
+
+.very-high-risk {
+    background-color: red;
+    color: red;
+}
 
