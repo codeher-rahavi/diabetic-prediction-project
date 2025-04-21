@@ -72,7 +72,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color:black;
+    color: black;
 }
 
 input {
@@ -110,6 +110,7 @@ button:hover {
     border-top: 4px solid rgb(53, 82, 97);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 .contact .declaration {
     margin: 30px auto 0;
     max-width: 800px;
@@ -120,4 +121,30 @@ button:hover {
     font-size: 16px;
     font-style: italic;
     border-radius: 8px;
+}
+
+/* Output result input field styles */
+.output h3 input {
+    background-color: #f0f8ff;
+    color: #034f6f;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #034f6f;
+}
+
+/* Severity Stage Colors */
+.low-risk {
+    color: green;
+}
+
+.moderate-risk {
+    color: orange;
+}
+
+.high-risk {
+    color: orangered;
+}
+
+.very-high-risk {
+    color: red;
 }
