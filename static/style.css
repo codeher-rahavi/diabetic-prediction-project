@@ -134,17 +134,22 @@ button:hover {
 
 /* Severity Stage Colors */
 .low-risk {
-    color: green;
+    background-color: #28a745; /* Green */
+    color: white;
 }
 
 .moderate-risk {
-    color: orange;
+    background-color: #fd7e14; /* Orange */
+    color: white;
 }
 
 .high-risk {
-    color: orangered;
+    background-color: #dc3545; /* Red */
+    color: white;
 }
 
 .very-high-risk {
-    color: red;
+    background-color: #c82333; /* Dark Red */
+    color: white;
 }
+
