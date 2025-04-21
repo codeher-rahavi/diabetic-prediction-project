@@ -1,3 +1,4 @@
+/* Base Reset and Font */
 * {
     padding: 0;
     margin: 0;
@@ -9,6 +10,7 @@ body {
     color: #fff;
 }
 
+/* Background Video */
 .bg-video {
     position: fixed;
     top: 0;
@@ -20,6 +22,7 @@ body {
     opacity: 0.6;
 }
 
+/* Header Section */
 .head {
     display: flex;
     align-items: center;
@@ -55,6 +58,7 @@ body {
     text-decoration: underline;
 }
 
+/* Form Section */
 .search, .output, .contact {
     text-align: center;
     padding: 30px 10px;
@@ -104,6 +108,7 @@ button:hover {
     color: white;
 }
 
+/* Contact & Declaration */
 .contact {
     background-color: rgba(154, 199, 214, 0.9);
     color: rgb(4, 85, 128);
@@ -123,35 +128,7 @@ button:hover {
     border-radius: 8px;
 }
 
-/* Output result input field styles */
-.output h3 input {
-    background-color: #f0f8ff;
-    color: #034f6f;
-    font-weight: bold;
-    text-align: center;
-    border: 2px solid #034f6f;
-}
-
-/* Severity Stage Colors */
-.low-risk {
-    background-color: #28a745; /* Green */
-    color: white;
-}
-
-.moderate-risk {
-    background-color: #fd7e14; /* Orange */
-    color: white;
-}
-
-.high-risk {
-    background-color: #dc3545; /* Red */
-    color: white;
-}
-
-.very-high-risk {
-    background-color: #c82333; /* Dark Red */
-    color: white;
-}
+/* Severity Bar Meter */
 .severity-meter {
     width: 80%;
     max-width: 600px;
@@ -193,3 +170,13 @@ button:hover {
     color: red;
 }
 
+/* Speedometer Gauge Style */
+.gauge-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+canvas#severityGauge {
+    margin: 0 auto;
+    display: block;
+}
