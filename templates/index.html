@@ -47,19 +47,12 @@
 
     <!-- Output Section -->
     {% if result %}
-    <div class="output">
-        <h3>Result: <input value="{{ result }}" readonly></h3>
-
-        {% if probability %}
-        <h3>Confidence: <input value="{{ probability }}%" readonly></h3>
-        {% endif %}
-
-        {% if severity %}
-        <h3>Severity Stage: <input value="{{ severity }}" readonly style="color: red; font-weight: bold;"></h3>
-        {% endif %}
-    </div>
-    {% endif %}
-
+<div class="output">
+    <h3>Result: <input value="{{ result }}" readonly></h3>
+    <h3>Probability: <input value="{{ probability }}%" readonly></h3>
+    <h3>Severity Stage: <input value="{{ severity }}" readonly class="{{ severity_class }}"></h3>
+</div>
+{% endif %}
     <!-- Contact Info -->
     <div class="contact">
         <h2>Email: teamalpha@gmail.com</h2>
