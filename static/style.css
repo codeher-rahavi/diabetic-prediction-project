@@ -151,22 +151,22 @@ button:hover {
 
 .low-risk {
     background-color: green;
-    color: green;
+    color: black;
 }
 
 .moderate-risk {
     background-color: orange;
-    color: orange;
+    color: black;
 }
 
 .high-risk {
     background-color: red;
-    color: red;
+    color: black;
 }
 
 .very-high-risk {
     background-color: darkred;
-    color: darkred;
+    color: black;
 }
 
 /* Speedometer Gauge Style */
